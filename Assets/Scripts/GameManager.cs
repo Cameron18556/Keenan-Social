@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public List<PlayerData> players = new List<PlayerData>();
 
-    public List<Role> roles;
+    public List<Role> roles = new List<Role>();
 
     public TMP_Text playerShower;
 
@@ -27,9 +27,27 @@ public class GameManager : MonoBehaviour
 
     public GameObject BlockerWithText;
 
-    // Start is called before the first frame update
-    void Start()
+    public GameObject playerTurnPrefab;
+
+    public List<GameObject> playerTurns;
+
+    public bool turnOver = false;
+
+    public static GameManager Instance;
+
+    public int currentPlayerId = 0;
+
+    // Singleton instantiation
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
         DontDestroyOnLoad(gameObject);
     }
 
@@ -57,7 +75,6 @@ public class GameManager : MonoBehaviour
 
         player.role = roles[chosenRole];
         players.Add(player);
-        roles.RemoveAt(chosenRole);
 
         string playersShowText = "Players: \n";
 
@@ -75,13 +92,58 @@ public class GameManager : MonoBehaviour
     {
         startScreen.SetActive(false);
 
+        int pos = 0;
+
         foreach(PlayerData player in players)
         {
-            GameObject currentBlocker = Instantiate(BlockerWithText, canvas.transform);
+            GameObject playerTurnCurrent = Instantiate(playerTurnPrefab, canvas.transform);
 
-            string message = "GIVE THE DEVICE TO PLAYER " + player.name;
+            Player playerPlayerComponent = playerTurnCurrent.GetComponent<Player>();
 
-            currentBlocker.GetComponentInChildren<TMP_Text>().text = message;
+            playerPlayerComponent.id = pos;
+
+            playerTurns.Add(playerTurnCurrent);
+
+            int chosenRole = Random.Range(0, roles.Count);
+
+            Debug.Log("chosen role pos = " + chosenRole);
+
+            player.role = roles[chosenRole];
+
+            playerPlayerComponent.playerName = player.name;
+
+            roles[chosenRole].AddToGameObject(playerTurnCurrent);
+
+            playerTurnCurrent.SetActive(false);
+
+            pos++;
         }
+
+        StartCoroutine(GoThroughPlayers());
+    }
+
+    public IEnumerator GoThroughPlayers()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentPlayerId = 0;
+        foreach(GameObject currentPlayerTurn in playerTurns)
+        {
+            currentPlayerTurn.SetActive(true);
+            Player currentPlayer = currentPlayerTurn.GetComponent<Player>();
+            GameObject blocker = Instantiate(BlockerWithText, canvas.transform);
+            blocker.GetComponentInChildren<TMP_Text>().text = "please pass this device to player: " + currentPlayer.playerName;
+            yield return new WaitUntil(() => turnOver == true);
+            turnOver = false;
+            currentPlayerTurn.SetActive(false);
+            currentPlayerId++;
+        }
+
+        GoThroughThePlayerAgaign();
+    }
+
+    public void GoThroughThePlayerAgaign()
+    {
+        StartCoroutine(GoThroughPlayers());
     }
 }
