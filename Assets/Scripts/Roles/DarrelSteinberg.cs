@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class ElDiablo : Role
+public class DarrelSteinberg : Role
 {
     // Start is called before the first frame update
     void Start()
@@ -19,7 +18,7 @@ public class ElDiablo : Role
 
     public override void AddToGameObject(GameObject obj)
     {
-        var copy = obj.AddComponent<ElDiablo>();
+        var copy = obj.AddComponent<DarrelSteinberg>();
         Player player = obj.GetComponent<Player>();
         player.role = this;
         player.currentCash = startCash;
@@ -29,6 +28,6 @@ public class ElDiablo : Role
 
     public override int OnEarn(int currentRate)
     {
-        return currentRate;
+        return currentRate * 2;
     }
 }
