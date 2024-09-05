@@ -329,7 +329,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0001306353}
+  m_AnchoredPosition: {x: 0, y: 0.00017530202}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1144351001426792265
@@ -779,8 +779,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -15.9}
-  m_SizeDelta: {x: 0, y: 100}
+  m_AnchoredPosition: {x: 0, y: -32.95002}
+  m_SizeDelta: {x: 0, y: 65.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4489761630018950119
 GameObject:
@@ -1498,7 +1498,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0001306353}
+  m_AnchoredPosition: {x: 0, y: 0.00017530202}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7933606868028595620
@@ -1647,8 +1647,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1678,10 +1678,11 @@ MonoBehaviour:
   stockDescription: {fileID: 6341633856103957232}
   currentCashText: {fileID: 3992897843139471433}
   ownedSections: []
+  sectionButtons: []
   currentCash: 0
   topOfStanderdList: {fileID: 3840109817693380517}
   topOfSectionList: {fileID: 8641257968874668527}
-  buttonPrefab: {fileID: 0}
+  buttonPrefab: {fileID: 2346541089002026240, guid: 59603c04bc27c344b8ad5b2fc86335df, type: 3}
 --- !u!1 &9221388912598188022
 GameObject:
   m_ObjectHideFlags: 0

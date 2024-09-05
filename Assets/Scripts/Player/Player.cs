@@ -19,7 +19,8 @@ public class Player : MonoBehaviour
     public TMP_Text stockDescription;
     public TMP_Text currentCashText;
 
-    public List<Section> ownedSections;
+    public List<Section> ownedSections = new List<Section>();
+    public List<GameObject> sectionButtons = new List<GameObject>();
 
     public int currentCash;
 
@@ -53,6 +54,11 @@ public class Player : MonoBehaviour
         TurnOver();
     }
 
+    public void TurnStart()
+    {
+
+    }
+
     public void TurnOver()
     {
         currentCash += role.standerdIncome;
@@ -61,9 +67,16 @@ public class Player : MonoBehaviour
 
     public void SetUpButtons()
     {
+        foreach(GameObject button in sectionButtons)
+        {
+            Destroy(button);
+        }
+
         for (int i = 0; i < ownedSections.Count; i++)
         {
             Button currentButton = Instantiate(buttonPrefab, topOfSectionList).GetComponent<Button>();
+            sectionButtons.Add(currentButton.gameObject);
+            currentButton.GetComponentInChildren<TMP_Text>().text = ownedSections[i].name;
             currentButton.onClick.AddListener(ownedSections[i].operation);
             currentButton.transform.position = new Vector3(currentButton.transform.position.x, currentButton.transform.position.y + (currentButton.GetComponent<RectTransform>().rect.height * i), currentButton.transform.position.z);
         }
@@ -73,6 +86,20 @@ public class Player : MonoBehaviour
     {
         currentCashText.text = "$" + currentCash;
         roleDescription.text = role.description;
+
+        FindOwnership();
+
         stockDescription.text = "%" + stockOwnership.ToString();
+    }
+
+    public void FindOwnership()
+    {
+        float ownership = 0;
+
+        foreach (Section section in ownedSections)
+        {
+            ownership += section.stockPercentage;
+        }
+        stockOwnership = ownership;
     }
 }

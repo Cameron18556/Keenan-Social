@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0deb3a9af6697a4ab84a39dcdc76b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: you are DarrelSteinberg the mayor of sacremento
+  description: you are Darrel Steinberg the mayor of sacremento
   standerdIncome: 3
   startCash: 40
+  meetingWinCondition: 0

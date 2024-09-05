@@ -5,9 +5,19 @@ using UnityEngine;
 public class Milk : Section
 {
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        
+        base.Start();
+    }
+
+    public override void GetBought()
+    {
+        base.GetBought();
+    }
+
+    public override void Operate()
+    {
+        base.Operate();
     }
 
     // Update is called once per frame

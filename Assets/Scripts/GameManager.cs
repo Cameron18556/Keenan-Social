@@ -12,6 +12,7 @@ public class PlayerData
 public class GameManager : MonoBehaviour
 {
     public GameObject canvas;
+    public Transform playerSawn;
 
     public TMP_InputField nameInput;
 
@@ -34,6 +35,8 @@ public class GameManager : MonoBehaviour
     public bool turnOver = false;
 
     public static GameManager Instance;
+
+    public Player activePlayer;
 
     public int currentPlayerId = 0;
 
@@ -86,6 +89,11 @@ public class GameManager : MonoBehaviour
         playerShower.text = playersShowText;
 
         nameInput.text = "";
+
+        if(roles.Count == playerNames.Count)
+        {
+            ReadyPressed();
+        }
     }
 
     public void ReadyPressed()
@@ -96,7 +104,7 @@ public class GameManager : MonoBehaviour
 
         foreach(PlayerData player in players)
         {
-            GameObject playerTurnCurrent = Instantiate(playerTurnPrefab, canvas.transform);
+            GameObject playerTurnCurrent = Instantiate(playerTurnPrefab, playerSawn);
 
             Player playerPlayerComponent = playerTurnCurrent.GetComponent<Player>();
 
@@ -131,6 +139,16 @@ public class GameManager : MonoBehaviour
         {
             currentPlayerTurn.SetActive(true);
             Player currentPlayer = currentPlayerTurn.GetComponent<Player>();
+
+            activePlayer = currentPlayer;
+            currentPlayer.SetUpButtons();
+
+            foreach(Section sec in currentPlayer.ownedSections)
+            {
+                sec.currentPrice += sec.perTurnPriceIncrease;
+
+            }
+
             GameObject blocker = Instantiate(BlockerWithText, canvas.transform);
             blocker.GetComponentInChildren<TMP_Text>().text = "please pass this device to player: " + currentPlayer.playerName;
             yield return new WaitUntil(() => turnOver == true);
@@ -139,7 +157,15 @@ public class GameManager : MonoBehaviour
             currentPlayerId++;
         }
 
+        ///put the president vote here
+
         GoThroughThePlayerAgaign();
+    }
+
+    public void ShowMessage(string input)
+    {
+        GameObject blocker = Instantiate(BlockerWithText, canvas.transform);
+        blocker.GetComponentInChildren<TMP_Text>().text = input;
     }
 
     public void GoThroughThePlayerAgaign()
